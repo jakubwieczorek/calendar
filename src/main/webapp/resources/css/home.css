@@ -1,0 +1,17 @@
+body {
+	background-color: black;
+	color: white;
+}
+
+.submit {
+    width: 100px;
+    height: 50px;
+    font-size: 30px;
+    border: solid blue;
+    border-radius: 15px;
+    cursor: pointer;
+}
+
+.submit:hover {
+    background-color: red;
+}
