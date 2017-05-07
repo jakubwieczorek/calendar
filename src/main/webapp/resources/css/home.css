@@ -4,14 +4,19 @@ body {
 }
 
 .submit {
-    width: 100px;
-    height: 50px;
-    font-size: 30px;
-    border: solid blue;
-    border-radius: 15px;
-    cursor: pointer;
+	width: 100px;
+	height: 50px;
+	font-size: 30px;
+	margin: left;
+	text-align: center;
+	border: solid;
+	border-color: #669999;
+	border-radius: 15px;
+	cursor: pointer;
+	background-color: #3333ff;
 }
 
 .submit:hover {
-    background-color: red;
+    	background-color: #0000cc;
+	border-color: #3d5c5c;
 }
