@@ -6,7 +6,8 @@
 	<groupId>wieczorek.jakub</groupId>
 	<artifactId>calendar</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>war</packaging>
+
+    <packaging>war</packaging>
 
 	<name>calendar</name>
 	<description>Demo project for Spring Boot</description>
@@ -41,6 +42,7 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+
 	</dependencies>
 
 	<build>

@@ -8,20 +8,7 @@
     </head>
     <body>
         <h1>Calendar app</h1>
-
-        <div ng-app="calendar">
-
-            <div ng-controller="loginCtrl">
-                Name: <input ng-model="name">
-
-                <p class="submit" ng-click="login()">login<p>
-
-                {{temp}}
-            </div>
-
-        </div>
-
-        <script src="/calendar/resources/js/home.js"></script>
-
+	
+	<a href="http://localhost:8080/calendar/login/">sign in</a>
     </body>
 </html>
