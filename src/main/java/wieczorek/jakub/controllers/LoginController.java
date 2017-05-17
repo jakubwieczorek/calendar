@@ -1,31 +1,19 @@
 package wieczorek.jakub.controllers;
 
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.ArrayList;
-import java.util.List;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
- * Created by jakub on 08.05.17.
+ * Created by jakub on 12.05.17.
  */
-@RestController
+
+@Controller
 @RequestMapping("/login")
 public class LoginController
 {
     @RequestMapping("")
-    public String showLoginPage()
+    public String returnloginPage()
     {
         return "login";
-    }
-
-    @RequestMapping(value = "/{username}", method = RequestMethod.GET)
-    public ResponseEntity<List<String>>renderLoginData(@PathVariable("username") String username)
-    {
-        List<String> list = new ArrayList<>();
-        list.add("Hello " + username);
-
-        return new ResponseEntity<>(list, HttpStatus.OK);
     }
 }

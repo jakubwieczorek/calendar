@@ -1,19 +1,27 @@
+'use strict';
+
 var app = angular.module('calendar', []);
 
-app.controller('loginCtrl', function($scope, $http)
-{
+angular.module('calendar').controller('loginCtrl', ['$scope', 'userService', function($scope, userService) {
     	var i = 0;
 
-	temp = 'clicked 0 times';
+	$scope.user = {
+		username : '',
+		mail : ''
+	};
+	
+	fetchAllUsers();
 
-    	$scope.login = function()  
-	{
+	$scope.login = function() {
+		userService.addUser($scope.user).then(fetchAllUsers);
+		
+		fetchAllUsers();
+		
 		$scope.temp = 'clicked ' + i + 'times';
 		i++;
-	};
-
-	$http.get('localhost:8080/calendar/login').then(function(response)
-	{
-		$scope.data = response.data;
-	});
-});
+	}
+	
+	function fetchAllUsers() {
+		userService.getUsers().then(function(d){$scope.data = d;});
+	}
+}]);

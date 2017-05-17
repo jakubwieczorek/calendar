@@ -13,7 +13,7 @@
 
         <mvc:annotation-driven/>
 
-        <context:component-scan base-package="wieczorek.jakub.controllers"/>
+        <context:component-scan base-package="wieczorek.jakub"/>
 
         <mvc:resources mapping="/resources/**" location="/resources/"/>
 
