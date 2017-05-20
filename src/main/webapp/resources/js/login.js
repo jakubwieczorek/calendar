@@ -1,11 +1,9 @@
 'use strict';
 
-var app = angular.module('calendar', []);
-
 angular.module('calendar').controller('loginCtrl', ['$scope', 'userService', function($scope, userService) {
     	var i = 0;
 
-	$scope.user = {
+		$scope.user = {
 		username : '',
 		mail : ''
 	};
@@ -19,7 +17,7 @@ angular.module('calendar').controller('loginCtrl', ['$scope', 'userService', fun
 		
 		$scope.temp = 'clicked ' + i + 'times';
 		i++;
-	}
+	};
 	
 	function fetchAllUsers() {
 		userService.getUsers().then(function(d){$scope.data = d;});
