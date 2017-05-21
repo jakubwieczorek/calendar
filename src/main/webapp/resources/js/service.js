@@ -5,7 +5,8 @@ angular.module('calendar').factory('userService', ['$q', '$http',  function($q, 
 
 	var factory = {
 		getUsers : getUsers, // hoisting
-		addUser : addUser
+		addUser : addUser,
+        updateUser : updateUser
 	};
 
 	return factory;	
@@ -24,6 +25,16 @@ angular.module('calendar').factory('userService', ['$q', '$http',  function($q, 
 		var deferred = $q.defer();
 		
 		$http.post(URL, user).then(function(result) {
+			deferred.resolve(result.data);
+		});
+
+		return deferred.promise;
+	}
+
+	function updateUser(user) {
+		var deferred = $q.defer();
+
+		$http.put(URL + user.username, user).then(function(result) {
 			deferred.resolve(result.data);
 		});
 

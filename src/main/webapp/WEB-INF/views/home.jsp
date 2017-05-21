@@ -1,7 +1,8 @@
+<%@ taglib prefix="c" uri="http://www.springframework.org/tags" %>
 <!DOCTYPE html>
 <html>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
-    <link href="/calendar/resources/css/home.css" rel="stylesheet" type="text/css">
+    <link href="<c:url value='/resources/css/home.css'/>" rel="stylesheet" type="text/css">
     <head>
         <meta charset="UTF-8"/>
         <title>calendar</title>

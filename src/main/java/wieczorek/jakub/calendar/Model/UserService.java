@@ -3,6 +3,7 @@ package wieczorek.jakub.calendar.Model;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by jakub on 13.05.17.
@@ -10,13 +11,13 @@ import java.util.List;
 @Service
 public final class UserService
 {
-    private List<User> users;
+    private Map<String, User> users;
 
-    public List<User> getUsers() {
+    public Map<String, User> getUsers() {
         return users;
     }
 
-    public void setUsers(List<User> users) {
+    public void setUsers(Map<String, User> users) {
         this.users = users;
     }
 }
