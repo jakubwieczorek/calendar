@@ -32,17 +32,11 @@
 							</tr>
 						</thead>
 						<tbody>
-							<%--<tr ng-repeat="x in data">--%>
-								<%--<td><span ng-bind="x.username"></span></td>--%>
-								<%--<td><span ng-bind="x.mail"></span></td>--%>
-								<%--<td><input type="submit" value="delete" id="delete" ng-click="update(x)"></td>--%>
-								<%--<td><input type="submit" value="update" id="update" ng-click="delete(x)"></td>--%>
-							<%--</tr>--%>
 							<tr ng-repeat="(key, value) in data">
 								<td><span ng-bind="value.username"></span></td>
 								<td><span ng-bind="value.mail"></span></td>
-								<%--<td><input type="submit" value="delete" id="delete" ng-click="update(x)"></td>--%>
-								<%--<td><input type="submit" value="update" id="update" ng-click="delete(x)"></td>--%>
+								<%--<td><input type="submit" value="delete" id="delete" ng-click="update(value.username)"></td>--%>
+								<%--<td><input type="submit" value="update" id="update" ng-click="delete(value.username)"></td>--%>
 							</tr>
 						</tbody>
 					</table>
@@ -50,8 +44,7 @@
 
         	</div>
 
-        	<script src="<c:url value='/resources/js/login.js'/>"></script>
-        	<script src="<c:url value='/resources/js/modules.js'/>"></script>
-        	<script src="<c:url value='/resources/js/service.js'/>"></script>
+			<script src="<c:url value='/resources/js/login.js'/>"></script>
+			<script src="<c:url value='/resources/js/service.js'/>"></script>
 	</body>	
 </html>

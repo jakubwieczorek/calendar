@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('calendar').controller('loginCtrl', ['$scope', 'userService', function($scope, userService) {
+angular.module('calendar', []).controller('loginCtrl', ['$scope', 'userService', function($scope, userService) {
 
     $scope.username = '';
     $scope.mail = '';
