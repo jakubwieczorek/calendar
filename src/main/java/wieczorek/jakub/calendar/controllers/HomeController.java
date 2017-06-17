@@ -16,20 +16,4 @@ public class HomeController
     {
         return "home";
     }
-
-//    @RequestMapping("/login")
-//    public String loginHandle()
-//    {
-//        try
-//        {
-//            Registry registry = LocateRegistry.getRegistry();
-//            Login login = (Login)registry.lookup("LoginMsg");
-//            String response = login.bindLogin();
-//        } catch (Exception e) {
-//            System.err.println("Client exception: " + e.toString());
-//            e.printStackTrace();
-//        }
-//
-//        return "/home";
-//    }
 }

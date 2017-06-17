@@ -1,9 +1,11 @@
 package wieczorek.jakub.calendar.Model;
 
+import java.io.Serializable;
+
 /**
  * Created by jakub on 12.05.17.
  */
-public class User
+public class User implements Serializable
 {
     private String username;
 
