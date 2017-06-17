@@ -25,37 +25,21 @@ public class CalendarConfiguration extends WebMvcConfigurerAdapter
     {
         InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
         
-        viewResolver.setViewClass(JstlView.class);
-        viewResolver.setPrefix("/WEB-INF/views/");
-        viewResolver.setSuffix(".jsp");
-        
         registry.viewResolver(viewResolver);
     }
-
-    @Override
-    public void addResourceHandlers(ResourceHandlerRegistry registry)
-    {
-        registry.addResourceHandler("/resources/**").addResourceLocations("/resources/");
-    }
-
-//    @Override
-//    public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
-//        configurer.enable();
-//    }
 
     @Bean
     public UserService userService()
     {
         UserService userService = new UserService();
         userService.setUsers(new ConcurrentHashMap<String, User>());
-//        userService.setUsers(new UsersList());
 
         User user = new User("Kuba", "kuba@op.pl");
-        //user.setId(1);
+
         userService.getUsers().put(user.getUsername(), user);
 
         user = new User("Bartek", "bartek@op.pl");
-        //user.setId(2);
+
         userService.getUsers().put(user.getUsername(), user);
 
         return userService;

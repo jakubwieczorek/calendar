@@ -7,12 +7,12 @@ import org.springframework.web.bind.annotation.*;
 import wieczorek.jakub.calendar.Model.UserService;
 import wieczorek.jakub.calendar.Model.User;
 
-import java.util.List;
 import java.util.Map;
 
 /**
  * Created by jakub on 08.05.17.
  */
+@CrossOrigin(origins = "http://localhost:1234") // enable CORS for all requestmapping
 @RestController// == @Controller + @ResponseBody (@ResponseBody before each method which
 // binds returned value to outgoing http response body)
 @RequestMapping("/users")
@@ -22,11 +22,16 @@ public class UsersController
     private UserService userService;
 
     @RequestMapping(value = "", method = RequestMethod.POST)
-    public ResponseEntity<Void>createUser(@RequestBody User user)
+    public ResponseEntity<String>createUser(@RequestBody User user)
     {
-        userService.getUsers().put(user.getUsername(), user);
+        if(userService.getUsers().get(user.getUsername()) == null)
+        {
+            userService.getUsers().put(user.getUsername(), user);
 
-        return new ResponseEntity<>(HttpStatus.CREATED);
+            return new ResponseEntity<>("resource updated successfully", HttpStatus.CREATED);
+        }
+
+        return new ResponseEntity<>("User Exist", HttpStatus.CONFLICT);
     }
 
     @RequestMapping(value = "", method = RequestMethod.GET)
@@ -44,5 +49,16 @@ public class UsersController
         userToUpdate.setUsername(user.getUsername());
 
         return new ResponseEntity<Void>(HttpStatus.ACCEPTED);
+    }
+
+    @RequestMapping(value = "/{username}", method = RequestMethod.DELETE)
+    public ResponseEntity<String> deleteUser(@PathVariable(value = "username") String username)
+    {
+        if(this.userService.getUsers().remove(username) != null)
+        {
+            return new ResponseEntity<>("resource deleted successfully", HttpStatus.OK);
+        }
+
+        return new ResponseEntity<>("User doesn't exist", HttpStatus.NO_CONTENT);
     }
 }
