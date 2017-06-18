@@ -20,14 +20,6 @@ import java.util.concurrent.ConcurrentHashMap;
 @ComponentScan(basePackages = "wieczorek.jakub.calendar")
 public class CalendarConfiguration extends WebMvcConfigurerAdapter
 {
-    @Override
-    public void configureViewResolvers(ViewResolverRegistry registry) 
-    {
-        InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
-        
-        registry.viewResolver(viewResolver);
-    }
-
     @Bean
     public UserService userService()
     {

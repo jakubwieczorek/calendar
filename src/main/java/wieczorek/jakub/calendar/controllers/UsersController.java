@@ -37,18 +37,30 @@ public class UsersController
     @RequestMapping(value = "", method = RequestMethod.GET)
     public ResponseEntity<Map<String, User>>fetchAllUsers()
     {
-        return new ResponseEntity<>(userService.getUsers(), HttpStatus.OK);
+        return new ResponseEntity<>(this.userService.getUsers(), HttpStatus.OK);
     }
 
     @RequestMapping(value = "/{username}", method = RequestMethod.PUT)
-    public ResponseEntity<Void>createUser(@PathVariable(value = "username") String username, @RequestBody User user)
+    public ResponseEntity<String>updateUser(@PathVariable(value = "username") String username, @RequestBody User user)
     {
-        User userToUpdate = userService.getUsers().get(username);
+        User userToUpdate = this.userService.getUsers().get(username);
 
-        userToUpdate.setMail(user.getMail());
-        userToUpdate.setUsername(user.getUsername());
+        if(userToUpdate == null)
+        {
+            return new ResponseEntity<>("User don't exist", HttpStatus.NO_CONTENT);
+        } else
+        {
+            if(this.userService.getUsers().get(user.getUsername()) != null && !user.getUsername().equals(username))
+            { // new username is busy and not by current user
+                return new ResponseEntity<>("Conflict occurs", HttpStatus.CONFLICT);
+            } else
+            {
+                this.userService.getUsers().remove(username); // new key and value
+                this.userService.getUsers().put(user.getUsername(), user);
 
-        return new ResponseEntity<Void>(HttpStatus.ACCEPTED);
+                return new ResponseEntity<>("resource updated successfully", HttpStatus.OK);
+            }
+        }
     }
 
     @RequestMapping(value = "/{username}", method = RequestMethod.DELETE)
