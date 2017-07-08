@@ -4,8 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import wieczorek.jakub.calendar.Model.UserService;
-import wieczorek.jakub.calendar.Model.User;
+import wieczorek.jakub.calendar.model.User;
+import wieczorek.jakub.calendar.service.UserService;
 
 import java.util.Map;
 
@@ -28,16 +28,16 @@ public class UsersController
         {
             userService.getUsers().put(user.getUsername(), user);
 
-            return new ResponseEntity<>("resource updated successfully", HttpStatus.CREATED);
+            return new ResponseEntity<String>("resource updated successfully", HttpStatus.CREATED);
         }
 
-        return new ResponseEntity<>("User Exist", HttpStatus.CONFLICT);
+        return new ResponseEntity<String>("User Exist", HttpStatus.CONFLICT);
     }
 
     @RequestMapping(value = "", method = RequestMethod.GET)
     public ResponseEntity<Map<String, User>>fetchAllUsers()
     {
-        return new ResponseEntity<>(this.userService.getUsers(), HttpStatus.OK);
+        return new ResponseEntity<Map<String, User>>(this.userService.getUsers(), HttpStatus.OK);
     }
 
     @RequestMapping(value = "/{username}", method = RequestMethod.PUT)
@@ -47,18 +47,18 @@ public class UsersController
 
         if(userToUpdate == null)
         {
-            return new ResponseEntity<>("User don't exist", HttpStatus.NO_CONTENT);
+            return new ResponseEntity<String>("User don't exist", HttpStatus.NO_CONTENT);
         } else
         {
             if(this.userService.getUsers().get(user.getUsername()) != null && !user.getUsername().equals(username))
             { // new username is busy and not by current user
-                return new ResponseEntity<>("Conflict occurs", HttpStatus.CONFLICT);
+                return new ResponseEntity<String>("Conflict occurs", HttpStatus.CONFLICT);
             } else
             {
                 this.userService.getUsers().remove(username); // new key and value
                 this.userService.getUsers().put(user.getUsername(), user);
 
-                return new ResponseEntity<>("resource updated successfully", HttpStatus.OK);
+                return new ResponseEntity<String>("resource updated successfully", HttpStatus.OK);
             }
         }
     }
@@ -68,9 +68,9 @@ public class UsersController
     {
         if(this.userService.getUsers().remove(username) != null)
         {
-            return new ResponseEntity<>("resource deleted successfully", HttpStatus.OK);
+            return new ResponseEntity<String>("resource deleted successfully", HttpStatus.OK);
         }
 
-        return new ResponseEntity<>("User doesn't exist", HttpStatus.NO_CONTENT);
+        return new ResponseEntity<String>("User doesn't exist", HttpStatus.NO_CONTENT);
     }
 }

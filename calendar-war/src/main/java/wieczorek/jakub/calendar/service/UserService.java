@@ -1,8 +1,8 @@
-package wieczorek.jakub.calendar.Model;
+package wieczorek.jakub.calendar.service;
 
 import org.springframework.stereotype.Service;
+import wieczorek.jakub.calendar.model.User;
 
-import java.util.List;
 import java.util.Map;
 
 /**
