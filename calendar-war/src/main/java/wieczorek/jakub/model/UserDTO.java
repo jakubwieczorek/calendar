@@ -7,30 +7,20 @@ import java.io.Serializable;
  */
 public class UserDTO implements Serializable
 {
-    Long id;
-
-    String username;
+    String firstName;
 
     String mail;
 
+    String surname;
+
     String password;
 
-    Long eventId;
-
-    public Long getId() {
-        return id;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
     public String getMail() {
@@ -41,19 +31,19 @@ public class UserDTO implements Serializable
         this.mail = mail;
     }
 
+    public String getSurname() {
+        return surname;
+    }
+
+    public void setSurname(String surname) {
+        this.surname = surname;
+    }
+
     public String getPassword() {
         return password;
     }
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public Long getEventId() {
-        return eventId;
-    }
-
-    public void setEventId(Long eventId) {
-        this.eventId = eventId;
     }
 }

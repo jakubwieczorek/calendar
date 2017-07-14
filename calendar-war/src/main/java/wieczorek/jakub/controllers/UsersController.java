@@ -4,7 +4,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import wieczorek.jakub.model.User;
+import wieczorek.jakub.ds.UserDao;
+import wieczorek.jakub.model.UserDTO;
+import wieczorek.jakub.model.UserEntity;
+import wieczorek.jakub.model.UserParam;
 import wieczorek.jakub.service.UserService;
 
 import java.util.Map;
@@ -19,58 +22,63 @@ import java.util.Map;
 public class UsersController
 {
     @Autowired
-    private UserService userService;
+    private UserDao userDao;
 
     @RequestMapping(value = "", method = RequestMethod.POST)
-    public ResponseEntity<String> createUser(@RequestBody User user)
+    public ResponseEntity<String> createUser(@RequestBody UserDTO aUser)
     {
-        if(userService.getUsers().get(user.getUsername()) == null)
+        if(userDao.findUser(new UserParam(aUser.getMail())) == null)
         {
-            userService.getUsers().put(user.getUsername(), user);
+            userDao.addUser(new UserEntity(aUser));
 
-            return new ResponseEntity<String>("resource updated successfully", HttpStatus.CREATED);
+            return new ResponseEntity<>("resource created successfully", HttpStatus.CREATED);
         }
 
-        return new ResponseEntity<String>("User Exist", HttpStatus.CONFLICT);
+        return new ResponseEntity<>("conflict: user Exist", HttpStatus.CONFLICT);
     }
 
     @RequestMapping(value = "", method = RequestMethod.GET)
-    public ResponseEntity<Map<String, User>> fetchAllUsers()
+    public ResponseEntity<Map<String, UserDTO>> fetchAllUsers()
     {
-        return new ResponseEntity<Map<String, User>>(this.userService.getUsers(), HttpStatus.OK);
+        return new ResponseEntity<>(UserService.toMap(userDao.selectUsers()), HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/{username}", method = RequestMethod.PUT)
-    public ResponseEntity<String> updateUser(@PathVariable(value = "username") String username, @RequestBody User user)
+    @RequestMapping(value = "/{mail:.+}", method = RequestMethod.PUT)
+    public ResponseEntity<String> updateUser(@PathVariable(value = "mail") String aMail, @RequestBody UserDTO aUser)
     {
-        User userToUpdate = this.userService.getUsers().get(username);
+        // Test code especially entity manager
+        // Read previously enrolled bookmarks
+
+        UserDTO userToUpdate = this.userDao.findUser(new UserParam(aMail)).toDTO();
 
         if(userToUpdate == null)
         {
-            return new ResponseEntity<String>("User don't exist", HttpStatus.NO_CONTENT);
+            return new ResponseEntity<>("User don't exist", HttpStatus.NO_CONTENT);
+        }
+
+        if(this.userDao.findUser(new UserParam(aUser.getMail())) != null)
+        { // mail is busy
+            return new ResponseEntity<>("Conflict occurs", HttpStatus.CONFLICT);
         } else
         {
-            if(this.userService.getUsers().get(user.getUsername()) != null && !user.getUsername().equals(username))
-            { // new username is busy and not by current user
-                return new ResponseEntity<String>("Conflict occurs", HttpStatus.CONFLICT);
-            } else
-            {
-                this.userService.getUsers().remove(username); // new key and value
-                this.userService.getUsers().put(user.getUsername(), user);
+            this.userDao.updateUser(new UserParam(aMail), new UserEntity(aUser));
 
-                return new ResponseEntity<String>("resource updated successfully", HttpStatus.OK);
-            }
+            return new ResponseEntity<>("resource updated successfully", HttpStatus.OK);
         }
     }
 
-    @RequestMapping(value = "/{username}", method = RequestMethod.DELETE)
-    public ResponseEntity<String> deleteUser(@PathVariable(value = "username") String username)
+    @RequestMapping(value = "/{mail:.+}", method = RequestMethod.DELETE)
+    public ResponseEntity<String> deleteUser(@PathVariable(value = "mail") String aMail)
     {
-        if(this.userService.getUsers().remove(username) != null)
+        UserEntity toUpdate = this.userDao.findUser(new UserParam(aMail));
+
+        if(toUpdate != null)
         {
-            return new ResponseEntity<String>("resource deleted successfully", HttpStatus.OK);
+            this.userDao.deleteUser(toUpdate);
+
+            return new ResponseEntity<>("resource deleted successfully", HttpStatus.OK);
         }
 
-        return new ResponseEntity<String>("User doesn't exist", HttpStatus.NO_CONTENT);
+        return new ResponseEntity<>("cannot delete resource: User doesn't exist", HttpStatus.NO_CONTENT);
     }
 }

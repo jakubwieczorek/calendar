@@ -1,15 +1,14 @@
 package wieczorek.jakub.ds;
 
-import org.springframework.stereotype.Repository;
-import wieczorek.jakub.model.User;
 import wieczorek.jakub.model.UserEntity;
 import wieczorek.jakub.model.UserParam;
 
+import javax.annotation.Resource;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.transaction.Transactional;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -17,21 +16,11 @@ import java.util.List;
  */
 public class UserDaoBean implements UserDao
 {
-    private final String FIND_QUERY = "select u from UserEntity u where u.username = :username";
-    private final String QUERY = "from UserEntity u";
+    private final String FIND_QUERY = "select u from UserEntity u where u.mail=:mail";
+    private final String QUERY = "select u from UserEntity u";
 
     @PersistenceContext
     EntityManager entityManager;
-
-    @Transactional
-    public List<UserEntity> findUsers(UserParam userParam)
-    {
-        Query query = entityManager.createQuery(FIND_QUERY, UserEntity.class);
-
-        query.setParameter("username", userParam.getUsername());
-
-        return query.getResultList();
-    }
 
     @Transactional
     public List<UserEntity> selectUsers()
@@ -39,13 +28,44 @@ public class UserDaoBean implements UserDao
         Query query = entityManager.createQuery(QUERY, UserEntity.class);
 
         return query.getResultList();
+    }
 
-//        UserEntity user = entityManager.find(UserEntity.class, 1L);
-//
-//        List<UserEntity> list = new ArrayList<UserEntity>();
-//
-//        list.add(user);
-//
-//        return list;
+    @Transactional
+    public UserEntity findUser(UserParam aUserParam)
+    {
+        try
+        {
+            Query query = entityManager.createQuery(FIND_QUERY, UserEntity.class);
+
+            query.setParameter("mail", aUserParam.getMail());
+
+            return (UserEntity) query.getSingleResult();
+        } catch(NoResultException ex)
+        {
+            return null;
+        }
+    }
+
+    @Transactional
+    public void deleteUser(UserEntity aUser)
+    {
+        entityManager.remove(aUser);
+    }
+
+    @Transactional
+    public void updateUser(UserParam aMail, UserEntity aUser)
+    {
+        UserEntity toUpdate = this.findUser(aMail);
+
+        toUpdate.setSurname(aUser.getSurname());
+        toUpdate.setFirstName(aUser.getFirstName());
+        toUpdate.setMail(aUser.getMail());
+        toUpdate.setPassword(aUser.getPassword());
+    }
+
+    @Transactional
+    public void addUser(UserEntity aUser)
+    {
+        entityManager.persist(aUser);
     }
 }

@@ -1,6 +1,6 @@
 package wieczorek.jakub.ds;
 
-import wieczorek.jakub.model.User;
+import wieczorek.jakub.model.UserDTO;
 import wieczorek.jakub.model.UserEntity;
 import wieczorek.jakub.model.UserParam;
 
@@ -11,6 +11,9 @@ import java.util.List;
  */
 public interface UserDao
 {
-    List<UserEntity> findUsers(UserParam userParam);
     List<UserEntity> selectUsers();
+    void deleteUser(UserEntity aUser);
+    void addUser(UserEntity aUser);
+    void updateUser(UserParam aPrama, UserEntity aUser);
+    UserEntity findUser(UserParam aUserParam);
 }

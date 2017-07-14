@@ -8,6 +8,11 @@ public class UserParam
     private String username;
     private String mail;
 
+    public UserParam(String mail)
+    {
+        this.mail = mail;
+    }
+
     public String getUsername() {
         return username;
     }
