@@ -1,0 +1,3 @@
+FROM mysql
+# root password by environment variable
+ENV MYSQL_ROOT_PASSWORD admin

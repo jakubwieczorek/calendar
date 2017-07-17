@@ -1,0 +1,26 @@
+version: '2'
+services:
+  db: # name in net created by docker compose web see this container as db
+    build:
+      context: . # where are all docker files
+      dockerfile: dockerfile-db
+    ports:
+      - "3306:3306"
+  web:
+    build:
+      context: .
+      dockerfile: dockerfile-web
+    ports:
+#     - "9043:9043" # WebSphere Application Server Administration Console secure
+#     - "2809:2809" # CORBA
+#     - "9100:9100" # PDL 
+#     - "11004:11004"
+#     - "11003:11003" # ForeScout SecureConnector
+#     - "9060:9060" # WebSphere Application Server Administration Console secure
+#     - "9080:9080" # WebSphere Application Server HTTP Transport (port 1) default
+#     - "8880:8880" # IBM WebSphere Application Server SOAP connector
+#     - "7777:7777" # Oracle Cluster File System 2 and others
+      - "9990:9990"
+      - "8443:8443"
+      - "8080:8080"
+    tty: true
