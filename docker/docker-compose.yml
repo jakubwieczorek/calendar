@@ -20,7 +20,8 @@ services:
 #     - "9080:9080" # WebSphere Application Server HTTP Transport (port 1) default
 #     - "8880:8880" # IBM WebSphere Application Server SOAP connector
 #     - "7777:7777" # Oracle Cluster File System 2 and others
-      - "9990:9990"
-      - "8443:8443"
-      - "8080:8080"
+      - "9990:9990" # admin
+      - "8443:8443" 
+      - "8080:8080" # console
+      - "8787:8787" # debug
     tty: true

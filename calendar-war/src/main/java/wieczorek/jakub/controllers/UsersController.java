@@ -4,11 +4,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import wieczorek.jakub.ds.UserDao;
-import wieczorek.jakub.model.UserDTO;
-import wieczorek.jakub.model.UserEntity;
-import wieczorek.jakub.model.UserParam;
-import wieczorek.jakub.service.UserService;
+import wieczorek.jakub.calendar.boundry.UserService;
+import wieczorek.jakub.calendar.dto.UserDTO;
+import wieczorek.jakub.calendar.entities.UserEntity;
+import wieczorek.jakub.calendar.model.UserParam;
 
 import java.util.Map;
 
@@ -18,18 +17,18 @@ import java.util.Map;
 @CrossOrigin(origins = "http://localhost:1234") // enable CORS for all requestmapping
 @RestController// == @Controller + @ResponseBody (@ResponseBody before each method which
 // binds returned value to outgoing http response body)
-@RequestMapping("/users")
+@RequestMapping("/calendar/users")
 public class UsersController
 {
     @Autowired
-    private UserDao userDao;
+    private UserService userService;
 
     @RequestMapping(value = "", method = RequestMethod.POST)
     public ResponseEntity<String> createUser(@RequestBody UserDTO aUser)
     {
-        if(userDao.findUser(new UserParam(aUser.getMail())) == null)
+        if(userService.findUser(new UserParam(aUser.getMail())) == null)
         {
-            userDao.addUser(new UserEntity(aUser));
+            userService.addUser(aUser);
 
             return new ResponseEntity<>("resource created successfully", HttpStatus.CREATED);
         }
@@ -40,28 +39,25 @@ public class UsersController
     @RequestMapping(value = "", method = RequestMethod.GET)
     public ResponseEntity<Map<String, UserDTO>> fetchAllUsers()
     {
-        return new ResponseEntity<>(UserService.toMap(userDao.selectUsers()), HttpStatus.OK);
+        return new ResponseEntity<>(userService.selectUsers(), HttpStatus.OK);
     }
 
     @RequestMapping(value = "/{mail:.+}", method = RequestMethod.PUT)
     public ResponseEntity<String> updateUser(@PathVariable(value = "mail") String aMail, @RequestBody UserDTO aUser)
     {
-        // Test code especially entity manager
-        // Read previously enrolled bookmarks
-
-        UserDTO userToUpdate = this.userDao.findUser(new UserParam(aMail)).toDTO();
+        UserDTO userToUpdate = this.userService.findUser(new UserParam(aMail));
 
         if(userToUpdate == null)
         {
             return new ResponseEntity<>("User don't exist", HttpStatus.NO_CONTENT);
         }
 
-        if(this.userDao.findUser(new UserParam(aUser.getMail())) != null)
+        if(this.userService.findUser(new UserParam(aUser.getMail())) != null)
         { // mail is busy
             return new ResponseEntity<>("Conflict occurs", HttpStatus.CONFLICT);
         } else
         {
-            this.userDao.updateUser(new UserParam(aMail), new UserEntity(aUser));
+            this.userService.updateUser(new UserParam(aMail), aUser);
 
             return new ResponseEntity<>("resource updated successfully", HttpStatus.OK);
         }
@@ -70,11 +66,11 @@ public class UsersController
     @RequestMapping(value = "/{mail:.+}", method = RequestMethod.DELETE)
     public ResponseEntity<String> deleteUser(@PathVariable(value = "mail") String aMail)
     {
-        UserEntity toUpdate = this.userDao.findUser(new UserParam(aMail));
+        UserDTO toUpdate = this.userService.findUser(new UserParam(aMail));
 
         if(toUpdate != null)
         {
-            this.userDao.deleteUser(toUpdate);
+            this.userService.deleteUser(toUpdate);
 
             return new ResponseEntity<>("resource deleted successfully", HttpStatus.OK);
         }

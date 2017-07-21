@@ -145,7 +145,7 @@
                     </security>
                 </datasource>
                 <datasource jta="true" jndi-name="java:/MySqlDS" pool-name="MySqlDS" enabled="true" use-ccm="true">
-                    <connection-url>jdbc:mysql://db:3306/calendar?useSSL=false</connection-url>
+                    <connection-url>jdbc:mysql://db:3306/calendar?verifyServerCertificate=false&amp;useSSL=true</connection-url>
                     <!--<driver-class>com.mysql.jdbc.Driver</driver-class>-->
                     <driver>mysql</driver>
                     <security>

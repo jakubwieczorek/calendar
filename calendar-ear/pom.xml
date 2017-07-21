@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>calendar</artifactId>
+        <groupId>wieczorek.jakub</groupId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>calendar-ear</artifactId>
+
+    <packaging>ear</packaging>
+
+    <scm>
+        <developerConnection>scm:git:https://github.com/jakubwieczorek/calendar.git</developerConnection>
+        <tag>ratama-ear-be-0.1</tag>
+    </scm>
+
+    <build>
+        <finalName>calendar-ear</finalName>
+
+        <plugins>
+
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>buildnumber-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <phase>validate</phase>
+                        <goals>
+                            <goal>create</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+
+                    <format>{0}_{1,date,yyyyMMddHHmm}</format>
+                    <items>
+                        <item>${project.version}</item>
+                        <item>timestamp</item>
+                    </items>
+
+                    <doCheck>false</doCheck>
+                    <doUpdate>false</doUpdate>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-ear-plugin</artifactId>
+                <configuration>
+                    <modules>
+                        <ejbModule>
+                            <groupId>wieczorek.jakub</groupId>
+                            <artifactId>person-ejb</artifactId>
+                            <bundleFileName>person-ejb.jar</bundleFileName>
+                        </ejbModule>
+                    </modules>
+                    <fileNameMapping>no-version</fileNameMapping>
+                    <generateApplicationXml>true</generateApplicationXml>
+                    <version>6</version>
+
+                    <skinnyWars>true</skinnyWars>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+    <dependencies>
+        <dependency>
+            <groupId>wieczorek.jakub</groupId>
+            <artifactId>person-ejb</artifactId>
+            <version>1.0-SNAPSHOT</version>
+            <type>ejb</type>
+        </dependency>
+    </dependencies>
+
+</project>

@@ -1,8 +1,7 @@
-package wieczorek.jakub.ds;
+package wieczorek.jakub.calendar.ds;
 
-import wieczorek.jakub.model.UserDTO;
-import wieczorek.jakub.model.UserEntity;
-import wieczorek.jakub.model.UserParam;
+import wieczorek.jakub.calendar.entities.UserEntity;
+import wieczorek.jakub.calendar.model.UserParam;
 
 import java.util.List;
 
@@ -14,6 +13,6 @@ public interface UserDao
     List<UserEntity> selectUsers();
     void deleteUser(UserEntity aUser);
     void addUser(UserEntity aUser);
-    void updateUser(UserParam aPrama, UserEntity aUser);
+    void updateUser(UserParam aParam, UserEntity aUser);
     UserEntity findUser(UserParam aUserParam);
 }

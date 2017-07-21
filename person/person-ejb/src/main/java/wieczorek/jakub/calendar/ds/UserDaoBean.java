@@ -1,13 +1,9 @@
-package wieczorek.jakub.ds;
+package wieczorek.jakub.calendar.ds;
 
-import wieczorek.jakub.model.UserEntity;
-import wieczorek.jakub.model.UserParam;
+import wieczorek.jakub.calendar.entities.UserEntity;
+import wieczorek.jakub.calendar.model.UserParam;
 
-import javax.annotation.Resource;
-import javax.persistence.EntityManager;
-import javax.persistence.NoResultException;
-import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
+import javax.persistence.*;
 import javax.transaction.Transactional;
 import java.util.List;
 
@@ -19,7 +15,7 @@ public class UserDaoBean implements UserDao
     private final String FIND_QUERY = "select u from UserEntity u where u.mail=:mail";
     private final String QUERY = "select u from UserEntity u";
 
-    @PersistenceContext
+    @PersistenceContext(name = "person")
     EntityManager entityManager;
 
     @Transactional

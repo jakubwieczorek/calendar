@@ -1,3 +1,8 @@
 .idea
 *.iml
-*/target
+person/person-client/target/
+person/person-ejb/target/
+person/person-model/src/main/java/wieczorek/jakub/calendar/entities/
+person/person-model/target/
+calendar-ear/target/
+calendar-war/target/

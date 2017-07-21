@@ -1,4 +1,4 @@
-package wieczorek.jakub.model;
+package wieczorek.jakub.calendar.dto;
 
 import java.io.Serializable;
 
