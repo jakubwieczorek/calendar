@@ -15,13 +15,6 @@
 
     <packaging>pom</packaging>
 
-            <!--<dependency>-->
-                <!--<groupId>org.hibernate</groupId>-->
-                <!--<artifactId>hibernate-entitymanager</artifactId>-->
-                <!--<version>5.0.12.Final</version>-->
-            <!--</dependency>-->
-
-
     <modules>
         <module>person-client</module>
         <module>person-ejb</module>

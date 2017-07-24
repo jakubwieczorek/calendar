@@ -1,7 +1,7 @@
 package wieczorek.jakub.calendar.service;
 
-import wieczorek.jakub.calendar.dto.UserDTO;
-import wieczorek.jakub.calendar.entities.UserEntity;
+import wieczorek.jakub.calendar.dto.PersonDTO;
+import wieczorek.jakub.calendar.entities.PersonEntity;
 
 import java.util.HashMap;
 import java.util.List;
@@ -12,9 +12,9 @@ import java.util.Map;
  */
 public final class Refactor
 {
-    static public Map<String, UserDTO> toMap(List<UserEntity> aList)
+    static public Map<String, PersonDTO> toMap(List<PersonEntity> aList)
     {
-        final Map<String, UserDTO> result = new HashMap<>();
+        final Map<String, PersonDTO> result = new HashMap<>();
 
         aList.forEach(userEntity -> result.put(userEntity.getMail(), userEntity.toDTO()));
 

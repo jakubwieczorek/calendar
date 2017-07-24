@@ -8,7 +8,7 @@
         <!--<provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>-->
         <jta-data-source>java:/MySqlDS</jta-data-source>
 
-        <class>wieczorek.jakub.calendar.entities.UserEntity</class>
+        <class>wieczorek.jakub.calendar.entities.PersonEntity</class>
 
         <properties>
             <property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5Dialect"/>

@@ -4,10 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import wieczorek.jakub.calendar.boundry.UserService;
-import wieczorek.jakub.calendar.dto.UserDTO;
-import wieczorek.jakub.calendar.entities.UserEntity;
-import wieczorek.jakub.calendar.model.UserParam;
+import wieczorek.jakub.calendar.boundry.PersonService;
+import wieczorek.jakub.calendar.dto.PersonDTO;
+import wieczorek.jakub.calendar.params.PersonParam;
 
 import java.util.Map;
 
@@ -17,18 +16,18 @@ import java.util.Map;
 @CrossOrigin(origins = "http://localhost:1234") // enable CORS for all requestmapping
 @RestController// == @Controller + @ResponseBody (@ResponseBody before each method which
 // binds returned value to outgoing http response body)
-@RequestMapping("/calendar/users")
+@RequestMapping("/users")
 public class UsersController
 {
     @Autowired
-    private UserService userService;
+    private PersonService personService;
 
     @RequestMapping(value = "", method = RequestMethod.POST)
-    public ResponseEntity<String> createUser(@RequestBody UserDTO aUser)
+    public ResponseEntity<String> createUser(@RequestBody PersonDTO aUser)
     {
-        if(userService.findUser(new UserParam(aUser.getMail())) == null)
+        if(personService.findUser(new PersonParam(aUser.getMail())) == null)
         {
-            userService.addUser(aUser);
+            personService.addUser(aUser);
 
             return new ResponseEntity<>("resource created successfully", HttpStatus.CREATED);
         }
@@ -37,27 +36,27 @@ public class UsersController
     }
 
     @RequestMapping(value = "", method = RequestMethod.GET)
-    public ResponseEntity<Map<String, UserDTO>> fetchAllUsers()
+    public ResponseEntity<Map<String, PersonDTO>> fetchAllUsers()
     {
-        return new ResponseEntity<>(userService.selectUsers(), HttpStatus.OK);
+        return new ResponseEntity<>(personService.selectUsers(), HttpStatus.OK);
     }
 
     @RequestMapping(value = "/{mail:.+}", method = RequestMethod.PUT)
-    public ResponseEntity<String> updateUser(@PathVariable(value = "mail") String aMail, @RequestBody UserDTO aUser)
+    public ResponseEntity<String> updateUser(@PathVariable(value = "mail") String aMail, @RequestBody PersonDTO aUser)
     {
-        UserDTO userToUpdate = this.userService.findUser(new UserParam(aMail));
+        PersonDTO userToUpdate = this.personService.findUser(new PersonParam(aMail));
 
         if(userToUpdate == null)
         {
             return new ResponseEntity<>("User don't exist", HttpStatus.NO_CONTENT);
         }
 
-        if(this.userService.findUser(new UserParam(aUser.getMail())) != null)
+        if(this.personService.findUser(new PersonParam(aUser.getMail())) != null)
         { // mail is busy
             return new ResponseEntity<>("Conflict occurs", HttpStatus.CONFLICT);
         } else
         {
-            this.userService.updateUser(new UserParam(aMail), aUser);
+            this.personService.updateUser(new PersonParam(aMail), aUser);
 
             return new ResponseEntity<>("resource updated successfully", HttpStatus.OK);
         }
@@ -66,11 +65,11 @@ public class UsersController
     @RequestMapping(value = "/{mail:.+}", method = RequestMethod.DELETE)
     public ResponseEntity<String> deleteUser(@PathVariable(value = "mail") String aMail)
     {
-        UserDTO toUpdate = this.userService.findUser(new UserParam(aMail));
+        PersonDTO toUpdate = this.personService.findUser(new PersonParam(aMail));
 
         if(toUpdate != null)
         {
-            this.userService.deleteUser(toUpdate);
+            this.personService.deleteUser(toUpdate);
 
             return new ResponseEntity<>("resource deleted successfully", HttpStatus.OK);
         }

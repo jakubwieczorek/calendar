@@ -5,15 +5,15 @@ import java.io.Serializable;
 /**
  * Created by jakub on 10.07.17.
  */
-public class UserDTO implements Serializable
+public class PersonDTO implements Serializable
 {
-    String firstName;
+    private String firstName;
 
-    String mail;
+    private String mail;
 
-    String surname;
+    private String surname;
 
-    String password;
+    private String password;
 
     public String getFirstName() {
         return firstName;

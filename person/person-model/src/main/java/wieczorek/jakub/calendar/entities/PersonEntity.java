@@ -1,7 +1,6 @@
 package wieczorek.jakub.calendar.entities;
 
-import org.omg.PortableInterceptor.USER_EXCEPTION;
-import wieczorek.jakub.calendar.dto.UserDTO;
+import wieczorek.jakub.calendar.dto.PersonDTO;
 
 import javax.persistence.*;
 
@@ -9,40 +8,40 @@ import javax.persistence.*;
  * Created by jakub on 09.07.17.
  */
 @Entity
-@Table(name = "Person")
-public class UserEntity
+@Table(name = "person")
+public class PersonEntity
 {
     @Id
-    @Column(name = "id")
+    @Column(name = "ID")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
+    private Long id;
 
     @Column(name = "FIRST_NAME")
-    String firstName;
+    private String firstName;
 
     @Column(name = "SURNAME")
-    String surname;
+    private String surname;
 
     @Column(name = "MAIL")
-    String mail;
+    private String mail;
 
     @Column(name = "PASSWORD")
-    String password;
+    private String password;
 
-    public UserEntity() {
+    public PersonEntity() {
     }
 
-    public UserEntity(UserDTO aUserDTO)
+    public PersonEntity(PersonDTO aPersonDTO)
     {
-        this.setPassword(aUserDTO.getPassword());
-        this.setMail(aUserDTO.getMail());
-        this.setFirstName(aUserDTO.getFirstName());
-        this.setSurname(aUserDTO.getSurname());
+        this.setPassword(aPersonDTO.getPassword());
+        this.setMail(aPersonDTO.getMail());
+        this.setFirstName(aPersonDTO.getFirstName());
+        this.setSurname(aPersonDTO.getSurname());
     }
 
-    public UserDTO toDTO()
+    public PersonDTO toDTO()
     {
-        UserDTO result = new UserDTO();
+        PersonDTO result = new PersonDTO();
 
         result.setSurname(this.getSurname());
         result.setFirstName(this.getFirstName());

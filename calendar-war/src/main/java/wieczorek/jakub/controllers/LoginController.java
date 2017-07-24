@@ -5,7 +5,7 @@
 //import org.springframework.http.ResponseEntity;
 //import org.springframework.web.bind.annotation.*;
 //import UserDTO;
-//import wieczorek.jakub.service.UserService;
+//import wieczorek.jakub.service.PersonService;
 //
 ///**
 // * Created by jakub on 26.06.17.
@@ -15,10 +15,10 @@
 //public class LoginController
 //{
 //    @Autowired
-//    UserService userService;
+//    PersonService userService;
 //
 //    @RequestMapping(value = "/login", method = RequestMethod.POST)
-//    public ResponseEntity<UserDTO> login(@RequestBody UserDTO loginParams)
+//    public ResponseEntity<PersonDTO> login(@RequestBody PersonDTO loginParams)
 //    {
 //        User user = userService.getUsers().get(loginParams.getUsername());
 //

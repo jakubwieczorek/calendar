@@ -1,16 +1,16 @@
-package wieczorek.jakub.calendar.model;
+package wieczorek.jakub.calendar.params;
 
 import java.io.Serializable;
 
 /**
  * Created by jakub on 09.07.17.
  */
-public class UserParam implements Serializable
+public class PersonParam implements Serializable
 {
     private String username;
     private String mail;
 
-    public UserParam(String mail)
+    public PersonParam(String mail)
     {
         this.mail = mail;
     }
