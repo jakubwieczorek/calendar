@@ -51,7 +51,7 @@ public class UsersController
             return new ResponseEntity<>("User don't exist", HttpStatus.NO_CONTENT);
         }
 
-        if(this.personService.findUser(new PersonParam(aUser.getMail())) != null)
+        if(this.personService.findUser(new PersonParam(aUser.getMail())) != null && !aUser.getMail().equals(aMail)) // mail conflict
         { // mail is busy
             return new ResponseEntity<>("Conflict occurs", HttpStatus.CONFLICT);
         } else

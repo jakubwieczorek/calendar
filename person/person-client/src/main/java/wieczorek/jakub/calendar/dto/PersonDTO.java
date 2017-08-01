@@ -1,12 +1,15 @@
 package wieczorek.jakub.calendar.dto;
 
 import java.io.Serializable;
+import java.util.function.LongToIntFunction;
 
 /**
  * Created by jakub on 10.07.17.
  */
 public class PersonDTO implements Serializable
 {
+    private Long id;
+
     private String firstName;
 
     private String mail;
@@ -45,5 +48,13 @@ public class PersonDTO implements Serializable
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 }

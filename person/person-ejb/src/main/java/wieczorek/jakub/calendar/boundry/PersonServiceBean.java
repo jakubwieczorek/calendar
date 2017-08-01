@@ -49,6 +49,11 @@ public class PersonServiceBean implements PersonService
     @Override
     public PersonDTO findUser(PersonParam aPersonParam)
     {
-        return personDao.findUser(aPersonParam).toDTO();
+        if(personDao.findUser(aPersonParam) != null)
+        {
+            return personDao.findUser(aPersonParam).toDTO();
+        }
+
+        return null;
     }
 }

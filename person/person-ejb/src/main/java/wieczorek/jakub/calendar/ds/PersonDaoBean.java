@@ -45,6 +45,8 @@ public class PersonDaoBean implements PersonDao
     @Transactional
     public void deleteUser(PersonEntity aUser)
     {
+        aUser = entityManager.getReference(PersonEntity.class, aUser.getId()); // aUser must be
+        // attached entity (connected with database)
         entityManager.remove(aUser);
     }
 

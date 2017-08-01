@@ -33,6 +33,7 @@ public class PersonEntity
 
     public PersonEntity(PersonDTO aPersonDTO)
     {
+        this.setId(aPersonDTO.getId());
         this.setPassword(aPersonDTO.getPassword());
         this.setMail(aPersonDTO.getMail());
         this.setFirstName(aPersonDTO.getFirstName());
@@ -43,6 +44,7 @@ public class PersonEntity
     {
         PersonDTO result = new PersonDTO();
 
+        result.setId(this.getId());
         result.setSurname(this.getSurname());
         result.setFirstName(this.getFirstName());
         result.setMail(this.getMail());
