@@ -1,5 +1,7 @@
 package wieczorek.jakub.calendar.ds;
 
+import wieczorek.jakub.calendar.dto.EventDTO;
+import wieczorek.jakub.calendar.entities.EventEntity;
 import wieczorek.jakub.calendar.entities.PersonEntity;
 import wieczorek.jakub.calendar.params.PersonParam;
 
@@ -14,6 +16,7 @@ public class PersonDaoBean implements PersonDao
 {
     private final String FIND_QUERY = "select u from PersonEntity u where u.mail=:mail";
     private final String QUERY = "select u from PersonEntity u";
+    private final String EVENT_QUERY = "select e from PersonEntity u left join u.events e where u.mail = :mail";
 
     @PersistenceContext(name = "person")
     EntityManager entityManager;
@@ -65,5 +68,25 @@ public class PersonDaoBean implements PersonDao
     public void addUser(PersonEntity aUser)
     {
         entityManager.persist(aUser);
+    }
+
+    @Transactional
+    public List<EventEntity> selectEvents(PersonEntity aUser)
+    {
+        Query query = entityManager.createQuery(EVENT_QUERY, EventEntity.class);
+
+        query.setParameter("mail", aUser.getMail());
+
+        return (List<EventEntity>) query.getResultList();
+    }
+
+    @Transactional
+    public void addEventToPerson(PersonEntity aUser, EventEntity aEvent)
+    {
+        entityManager.persist(aEvent);
+
+        PersonEntity toUpdate = entityManager.find(PersonEntity.class, aUser.getId());
+
+        toUpdate.getEvents().add(aEvent);
     }
 }

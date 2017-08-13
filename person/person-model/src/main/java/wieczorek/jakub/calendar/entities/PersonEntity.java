@@ -3,6 +3,8 @@ package wieczorek.jakub.calendar.entities;
 import wieczorek.jakub.calendar.dto.PersonDTO;
 
 import javax.persistence.*;
+import java.math.BigInteger;
+import java.util.List;
 
 /**
  * Created by jakub on 09.07.17.
@@ -12,7 +14,7 @@ import javax.persistence.*;
 public class PersonEntity
 {
     @Id
-    @Column(name = "ID")
+    @Column(name = "PERSON_ID")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
@@ -27,6 +29,13 @@ public class PersonEntity
 
     @Column(name = "PASSWORD")
     private String password;
+
+    @OneToMany(fetch = FetchType.LAZY, cascade = {CascadeType.ALL})
+    @JoinTable(name = "EVENT_TO_PERSON",
+            joinColumns = @JoinColumn(name = "PERSON_ID"),
+            inverseJoinColumns = @JoinColumn(name = "EVENT_ID")
+    )
+    private List<EventEntity> events;
 
     public PersonEntity() {
     }
@@ -92,4 +101,14 @@ public class PersonEntity
     public void setPassword(String password) {
         this.password = password;
     }
+
+    public List<EventEntity> getEvents() {
+        return events;
+    }
+
+    public void setEvents(List<EventEntity> events) {
+        this.events = events;
+    }
+
+
 }

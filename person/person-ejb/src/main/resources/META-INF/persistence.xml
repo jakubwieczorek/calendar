@@ -9,10 +9,12 @@
         <jta-data-source>java:/MySqlDS</jta-data-source>
 
         <class>wieczorek.jakub.calendar.entities.PersonEntity</class>
+        <class>wieczorek.jakub.calendar.entities.EventEntity</class>
 
         <properties>
             <property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5Dialect"/>
             <property name="hibernate.show_sql" value="true"/>
+            <property name="hibernate.hbm2ddl.auto" value="validate"/>
         </properties>
     </persistence-unit>
 

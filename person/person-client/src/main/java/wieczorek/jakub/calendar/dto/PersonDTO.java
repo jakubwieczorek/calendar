@@ -1,6 +1,8 @@
 package wieczorek.jakub.calendar.dto;
 
 import java.io.Serializable;
+import java.math.BigInteger;
+import java.util.List;
 import java.util.function.LongToIntFunction;
 
 /**
@@ -17,6 +19,21 @@ public class PersonDTO implements Serializable
     private String surname;
 
     private String password;
+
+    private List<EventDTO> events;
+
+    public void setPassword(String password)
+    {
+        this.password = password;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getFirstName() {
         return firstName;
@@ -46,15 +63,11 @@ public class PersonDTO implements Serializable
         return password;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public List<EventDTO> getEvents() {
+        return events;
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
+    public void setEvents(List<EventDTO> events) {
+        this.events = events;
     }
 }

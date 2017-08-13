@@ -1,8 +1,11 @@
 package wieczorek.jakub.calendar.ds;
 
+import wieczorek.jakub.calendar.dto.EventDTO;
+import wieczorek.jakub.calendar.entities.EventEntity;
 import wieczorek.jakub.calendar.entities.PersonEntity;
 import wieczorek.jakub.calendar.params.PersonParam;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 /**
@@ -15,4 +18,9 @@ public interface PersonDao
     void addUser(PersonEntity aUser);
     void updateUser(PersonParam aParam, PersonEntity aUser);
     PersonEntity findUser(PersonParam aPersonParam);
+
+    List<EventEntity> selectEvents(PersonEntity aUser);
+
+    @Transactional
+    void addEventToPerson(PersonEntity aUser, EventEntity aEvent);
 }

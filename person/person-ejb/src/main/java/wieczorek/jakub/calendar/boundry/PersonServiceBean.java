@@ -1,7 +1,9 @@
 package wieczorek.jakub.calendar.boundry;
 
 import wieczorek.jakub.calendar.ds.PersonDao;
+import wieczorek.jakub.calendar.dto.EventDTO;
 import wieczorek.jakub.calendar.dto.PersonDTO;
+import wieczorek.jakub.calendar.entities.EventEntity;
 import wieczorek.jakub.calendar.entities.PersonEntity;
 import wieczorek.jakub.calendar.params.PersonParam;
 import wieczorek.jakub.calendar.service.Refactor;
@@ -9,6 +11,8 @@ import wieczorek.jakub.calendar.service.Refactor;
 import javax.ejb.Remote;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -55,5 +59,22 @@ public class PersonServiceBean implements PersonService
         }
 
         return null;
+    }
+
+    @Override
+    public List<EventDTO> selectEvents(PersonDTO aPerson)
+    {
+        List<EventDTO> eventDTOS = new ArrayList<>();
+        List<EventEntity> eventEntities = personDao.selectEvents(new PersonEntity(aPerson));
+
+        eventEntities.forEach((item) -> eventDTOS.add(item.toDto()));
+
+        return eventDTOS;
+    }
+
+    @Override
+    public void addEventToPerson(PersonDTO aPerson, EventDTO aEvent)
+    {
+        this.personDao.addEventToPerson(new PersonEntity(aPerson), new EventEntity(aEvent));
     }
 }

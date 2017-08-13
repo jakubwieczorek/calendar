@@ -16,8 +16,8 @@ import java.util.Map;
 @CrossOrigin(origins = "http://localhost:1234") // enable CORS for all requestmapping
 @RestController// == @Controller + @ResponseBody (@ResponseBody before each method which
 // binds returned value to outgoing http response body)
-@RequestMapping("/users")
-public class UsersController
+@RequestMapping("/admin")
+public class AdminController
 {
     @Autowired
     private PersonService personService;
