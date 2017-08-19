@@ -21,6 +21,5 @@ public interface PersonDao
 
     List<EventEntity> selectEvents(PersonEntity aUser);
 
-    @Transactional
     void addEventToPerson(PersonEntity aUser, EventEntity aEvent);
 }

@@ -12,9 +12,18 @@ public class EventDTO implements Serializable
 {
     private Long id;
     private String description;
+    private Integer importance;
 
     @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
     private Date eventDate;
+
+    public Integer getImportance() {
+        return importance;
+    }
+
+    public void setImportance(Integer importance) {
+        this.importance = importance;
+    }
 
     public Long getId() {
         return id;

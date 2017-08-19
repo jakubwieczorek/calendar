@@ -12,16 +12,17 @@ import java.util.List;
 /**
  * Created by jakub on 09.07.17.
  */
+@Transactional
 public class PersonDaoBean implements PersonDao
 {
     private final String FIND_QUERY = "select u from PersonEntity u where u.mail=:mail";
     private final String QUERY = "select u from PersonEntity u";
-    private final String EVENT_QUERY = "select e from PersonEntity u left join u.events e where u.mail = :mail";
+    private final String EVENT_QUERY = "select e from PersonEntity u inner join u.events e where u.mail = :mail";
 
     @PersistenceContext(name = "person")
     EntityManager entityManager;
 
-    @Transactional
+
     public List<PersonEntity> selectUsers()
     {
         Query query = entityManager.createQuery(QUERY, PersonEntity.class);
@@ -29,7 +30,6 @@ public class PersonDaoBean implements PersonDao
         return (List<PersonEntity>) query.getResultList();
     }
 
-    @Transactional
     public PersonEntity findUser(PersonParam aPersonParam)
     {
         try
@@ -45,15 +45,16 @@ public class PersonDaoBean implements PersonDao
         }
     }
 
-    @Transactional
     public void deleteUser(PersonEntity aUser)
     {
+
+
         aUser = entityManager.getReference(PersonEntity.class, aUser.getId()); // aUser must be
         // attached entity (connected with database)
         entityManager.remove(aUser);
+
     }
 
-    @Transactional
     public void updateUser(PersonParam aMail, PersonEntity aUser)
     {
         PersonEntity toUpdate = this.findUser(aMail);
@@ -64,13 +65,11 @@ public class PersonDaoBean implements PersonDao
         toUpdate.setPassword(aUser.getPassword());
     }
 
-    @Transactional
     public void addUser(PersonEntity aUser)
     {
         entityManager.persist(aUser);
     }
 
-    @Transactional
     public List<EventEntity> selectEvents(PersonEntity aUser)
     {
         Query query = entityManager.createQuery(EVENT_QUERY, EventEntity.class);
@@ -80,7 +79,6 @@ public class PersonDaoBean implements PersonDao
         return (List<EventEntity>) query.getResultList();
     }
 
-    @Transactional
     public void addEventToPerson(PersonEntity aUser, EventEntity aEvent)
     {
         entityManager.persist(aEvent);

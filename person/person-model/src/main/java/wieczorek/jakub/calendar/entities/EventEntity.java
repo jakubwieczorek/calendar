@@ -24,12 +24,16 @@ public class EventEntity
     @Column(name = "EVENT_DATE")
     private Date eventDate;
 
+    @Column(name = "IMPORTANCE")
+    private Integer importance;
+
     public EventDTO toDto()
     {
         EventDTO eventDTO = new EventDTO();
 
         eventDTO.setDescription(getDescription());
         eventDTO.setEventDate(getEventDate());
+        eventDTO.setImportance(getImportance());
         eventDTO.setId(getId());
 
         return eventDTO;
@@ -39,10 +43,20 @@ public class EventEntity
     {
         this.description = eventDTO.getDescription();
         this.eventDate = eventDTO.getEventDate();
+        this.id = eventDTO.getId();
+        this.importance = eventDTO.getImportance();
     }
 
     public EventEntity() {
 
+    }
+
+    public Integer getImportance() {
+        return importance;
+    }
+
+    public void setImportance(Integer importance) {
+        this.importance = importance;
     }
 
     public Long getId() {

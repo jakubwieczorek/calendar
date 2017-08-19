@@ -48,7 +48,7 @@ public class UserController
             events = personService.selectEvents(personDTO);
         }
 
-        if(! events.isEmpty())
+        if(events != null)
         {
             return new ResponseEntity<>(events, HttpStatus.OK);
         }

@@ -19,6 +19,10 @@ import java.util.Map;
 @RequestMapping("/admin")
 public class AdminController
 {
+    private static final String OK = "resource created successfully";
+    private static final String CONFLICT = "conflict";
+    private static final String NO_CONTENT = "User don't exist";
+
     @Autowired
     private PersonService personService;
 
@@ -29,10 +33,10 @@ public class AdminController
         {
             personService.addUser(aUser);
 
-            return new ResponseEntity<>("resource created successfully", HttpStatus.CREATED);
+            return new ResponseEntity<>(OK, HttpStatus.CREATED);
         }
 
-        return new ResponseEntity<>("conflict: user Exist", HttpStatus.CONFLICT);
+        return new ResponseEntity<>(CONFLICT, HttpStatus.CONFLICT);
     }
 
     @RequestMapping(value = "", method = RequestMethod.GET)
@@ -48,17 +52,17 @@ public class AdminController
 
         if(userToUpdate == null)
         {
-            return new ResponseEntity<>("User don't exist", HttpStatus.NO_CONTENT);
+            return new ResponseEntity<>(NO_CONTENT, HttpStatus.NO_CONTENT);
         }
 
         if(this.personService.findUser(new PersonParam(aUser.getMail())) != null && !aUser.getMail().equals(aMail)) // mail conflict
         { // mail is busy
-            return new ResponseEntity<>("Conflict occurs", HttpStatus.CONFLICT);
+            return new ResponseEntity<>(CONFLICT, HttpStatus.CONFLICT);
         } else
         {
             this.personService.updateUser(new PersonParam(aMail), aUser);
 
-            return new ResponseEntity<>("resource updated successfully", HttpStatus.OK);
+            return new ResponseEntity<>(OK, HttpStatus.OK);
         }
     }
 
@@ -71,9 +75,9 @@ public class AdminController
         {
             this.personService.deleteUser(toUpdate);
 
-            return new ResponseEntity<>("resource deleted successfully", HttpStatus.OK);
+            return new ResponseEntity<>(OK, HttpStatus.OK);
         }
 
-        return new ResponseEntity<>("cannot delete resource: User doesn't exist", HttpStatus.NO_CONTENT);
+        return new ResponseEntity<>(NO_CONTENT, HttpStatus.NO_CONTENT);
     }
 }
