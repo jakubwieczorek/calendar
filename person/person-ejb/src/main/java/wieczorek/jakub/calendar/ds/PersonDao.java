@@ -19,7 +19,11 @@ public interface PersonDao
     void updateUser(PersonParam aParam, PersonEntity aUser);
     PersonEntity findUser(PersonParam aPersonParam);
 
-    List<EventEntity> selectEvents(PersonEntity aUser);
+    List<EventEntity> selectEvents(PersonParam aUser);
 
     void addEventToPerson(PersonEntity aUser, EventEntity aEvent);
+
+    EventDTO findEvent(PersonParam aParam, EventEntity eventEntity);
+
+    void deleteEvent(PersonParam aParam, EventEntity eventEntity);
 }

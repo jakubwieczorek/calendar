@@ -18,6 +18,7 @@ public class PersonDaoBean implements PersonDao
     private final String FIND_QUERY = "select u from PersonEntity u where u.mail=:mail";
     private final String QUERY = "select u from PersonEntity u";
     private final String EVENT_QUERY = "select e from PersonEntity u inner join u.events e where u.mail = :mail";
+    private final String PERSON_EVENT_QUERY = "select u from PersonEntity u inner join u.events e where u.mail = :mail";
 
     @PersistenceContext(name = "person")
     EntityManager entityManager;
@@ -47,8 +48,6 @@ public class PersonDaoBean implements PersonDao
 
     public void deleteUser(PersonEntity aUser)
     {
-
-
         aUser = entityManager.getReference(PersonEntity.class, aUser.getId()); // aUser must be
         // attached entity (connected with database)
         entityManager.remove(aUser);
@@ -70,11 +69,11 @@ public class PersonDaoBean implements PersonDao
         entityManager.persist(aUser);
     }
 
-    public List<EventEntity> selectEvents(PersonEntity aUser)
+    public List<EventEntity> selectEvents(PersonParam aParam)
     {
         Query query = entityManager.createQuery(EVENT_QUERY, EventEntity.class);
 
-        query.setParameter("mail", aUser.getMail());
+        query.setParameter("mail", aParam.getMail());
 
         return (List<EventEntity>) query.getResultList();
     }
@@ -86,5 +85,45 @@ public class PersonDaoBean implements PersonDao
         PersonEntity toUpdate = entityManager.find(PersonEntity.class, aUser.getId());
 
         toUpdate.getEvents().add(aEvent);
+    }
+
+    public EventDTO findEvent(PersonParam aParam, EventEntity eventEntity)
+    {
+//        try
+//        {
+//            Query query = entityManager.createQuery(FIND_QUERY, PersonEntity.class);
+//
+//            query.setParameter("mail", aParam.getMail());
+//
+//            return (PersonEntity) query.getSingleResult();
+//        } catch(NoResultException ex)
+//        {
+//            return null;
+//        }
+
+        return null;
+    }
+
+    public void deleteEvent(PersonParam aParam, EventEntity eventEntity)
+    {
+        Query query = entityManager.createQuery(PERSON_EVENT_QUERY, PersonEntity.class);
+
+        query.setParameter("mail", aParam.getMail());
+
+        try
+        {
+            PersonEntity person =  (PersonEntity)query.getSingleResult();
+            List<EventEntity> events = person.getEvents();
+            events.remove(eventEntity);
+
+//            entityManager.merge(person);
+        } catch (NoResultException ex)
+        {
+
+        }
+
+        eventEntity = entityManager.getReference(EventEntity.class, eventEntity.getId());
+
+        entityManager.remove(eventEntity);
     }
 }

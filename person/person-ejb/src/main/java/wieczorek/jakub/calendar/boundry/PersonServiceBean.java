@@ -62,10 +62,10 @@ public class PersonServiceBean implements PersonService
     }
 
     @Override
-    public List<EventDTO> selectEvents(PersonDTO aPerson)
+    public List<EventDTO> selectEvents(PersonParam param)
     {
         List<EventDTO> eventDTOS = new ArrayList<>();
-        List<EventEntity> eventEntities = personDao.selectEvents(new PersonEntity(aPerson));
+        List<EventEntity> eventEntities = personDao.selectEvents(param);
 
         eventEntities.forEach((item) -> eventDTOS.add(item.toDto()));
 
@@ -76,5 +76,24 @@ public class PersonServiceBean implements PersonService
     public void addEventToPerson(PersonDTO aPerson, EventDTO aEvent)
     {
         this.personDao.addEventToPerson(new PersonEntity(aPerson), new EventEntity(aEvent));
+    }
+
+    @Override
+    public EventDTO findEvent(PersonParam aParam, EventDTO aEvent)
+    {
+//        return personDao.findEvent(aParam, new EventEntity(aEvent));
+//
+//        if(personDao.findEvent(aParam, new EventEntity(aEvent)) != null)
+//        {
+//            return personDao.findEvent(aParam, new EventEntity(aEvent)).toDTO();
+//        }
+
+        return null;
+    }
+
+    @Override
+    public void deleteEvent(PersonParam aParam, EventDTO event)
+    {
+        personDao.deleteEvent(aParam, new EventEntity(event));
     }
 }

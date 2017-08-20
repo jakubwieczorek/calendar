@@ -18,7 +18,11 @@ public interface PersonService
     void updateUser(PersonParam aParam, PersonDTO aUser);
     PersonDTO findUser(PersonParam aPersonParam);
 
-    List<EventDTO> selectEvents(PersonDTO aPerson);
+    List<EventDTO> selectEvents(PersonParam aParam);
 
     void addEventToPerson(PersonDTO aPerson, EventDTO aEvent);
+
+    EventDTO findEvent(PersonParam aParam, EventDTO aEvent);
+
+    void deleteEvent(PersonParam aParam, EventDTO event);
 }

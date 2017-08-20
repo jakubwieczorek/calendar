@@ -25,7 +25,7 @@ public class EJBFactory
     public PersonService createUserService()
     {
         return getObj(PersonService.class,
-                "/calendar-war-1.0-SNAPSHOT/PersonServiceBean!wieczorek.jakub.calendar.boundry.PersonService");
+                "/calendar-ear/person-ejb/PersonServiceBean!wieczorek.jakub.calendar.boundry.PersonService");
     }
 
     private <T> T getObj(Class<T> clazz, String ejbName)

@@ -45,7 +45,7 @@ public class UserController
 
         if(personDTO != null)
         {
-            events = personService.selectEvents(personDTO);
+            events = personService.selectEvents(new PersonParam(personDTO.getMail()));
         }
 
         if(events != null)
@@ -63,11 +63,27 @@ public class UserController
 
         if(person != null)
         {
-//            EventDTO aEvent = new EventDTO();
-//            aEvent.setEventDate(new Date(12331));
-//            aEvent.setDescription("TEST EVENT PUT");
-
             personService.addEventToPerson(person, aEvent);
+            return new ResponseEntity<>((Void) null, HttpStatus.OK);
+        }
+
+        return new ResponseEntity<>((Void) null, HttpStatus.NO_CONTENT);
+    }
+
+    @RequestMapping(value = "/event/{mail:.+}", method = RequestMethod.DELETE)
+    public ResponseEntity<Void> deleteEventFromPerson(@PathVariable("mail") String aMail, @RequestBody EventDTO aEvent)
+    {
+        PersonDTO user = this.personService.findUser(new PersonParam(aMail));
+
+        if(user != null)
+        {
+            //EventDTO event = this.personService.findEvent(new PersonParam(user.getMail()), aEvent);
+
+//            if(event != null)
+//            {
+                this.personService.deleteEvent(new PersonParam(user.getMail()), aEvent);
+//            }
+
             return new ResponseEntity<>((Void) null, HttpStatus.OK);
         }
 

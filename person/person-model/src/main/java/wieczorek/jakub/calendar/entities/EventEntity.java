@@ -27,6 +27,23 @@ public class EventEntity
     @Column(name = "IMPORTANCE")
     private Integer importance;
 
+    @Override
+    public boolean equals(Object o)
+    {
+        if (this == o) return true;
+        if (!(o instanceof EventEntity)) return false;
+
+        EventEntity that = (EventEntity) o;
+
+        return getId().equals(that.getId());
+    }
+
+    @Override
+    public int hashCode()
+    {
+        return getId().hashCode();
+    }
+
     public EventDTO toDto()
     {
         EventDTO eventDTO = new EventDTO();
