@@ -25,3 +25,9 @@ services:
       - "8080:8080" # console
       - "8787:8787" # debug
     tty: true
+  ci:
+    build:
+      context: .
+      dockerfile: dockerfile-ci
+    ports:
+      - "9090:8080"

@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
+import wieczorek.jakub.calendar.boundry.AuthService;
 import wieczorek.jakub.calendar.boundry.PersonService;
 
 import javax.naming.Context;
@@ -26,6 +27,13 @@ public class EJBFactory
     {
         return getObj(PersonService.class,
                 "/calendar-ear/person-ejb/PersonServiceBean!wieczorek.jakub.calendar.boundry.PersonService");
+    }
+
+    @Bean
+    public AuthService createAuthService()
+    {
+        return getObj(AuthService.class,
+                "/calendar-ear/person-ejb/AuthServiceBean!wieczorek.jakub.calendar.boundry.AuthService");
     }
 
     private <T> T getObj(Class<T> clazz, String ejbName)
